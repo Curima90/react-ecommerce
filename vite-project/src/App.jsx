@@ -21,9 +21,19 @@ function App() {
 
   return (
     products && (<table>
+      <thead>
+        <tr>
+          {Object.keys(products[0]).map(title => {
+            return <th>{title}</th>
+          })}
+        </tr>
+      </thead>
+
+      <tbody>
       {products.map(product => {
         return <Row product={product} />
       })}
+    </tbody>
     </table>)
   )
 }
