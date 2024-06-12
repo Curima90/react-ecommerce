@@ -5,6 +5,7 @@ import Row from './Row';
 function App() {
 
   const [products, setProducts] = useState()
+  const [search, setSearch] = useState("")
 
 
   useEffect(() => {
@@ -18,9 +19,20 @@ function App() {
     getProducts()
   }, [])
 
+  function handleInput(event) {
+    let text = event.target.value
+    setSearch(text)
+    console.log(search)
+  }
+
+  let filteredProducts = search.length === 0 ? products : products.filter((element) => {
+    return element.name.includes(search)
+  })
 
   return (
-    products && (<table>
+    <div>
+      <input value={search} placeholder="text goes here" onChange={handleInput}></input>
+    {products && (<table>
       <thead>
         <tr>
           {Object.keys(products[0]).map(title => {
@@ -30,11 +42,12 @@ function App() {
       </thead>
 
       <tbody>
-      {products.map(product => {
+      {filteredProducts.map(product => {
         return <Row product={product} />
       })}
     </tbody>
-    </table>)
+    </table>)}
+    </div>
   )
 }
 
